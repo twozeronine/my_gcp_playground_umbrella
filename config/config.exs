@@ -1,30 +1,18 @@
-# This file is responsible for configuring your umbrella
-# and **all applications** and their dependencies with the
-# help of the Config module.
-#
-# Note that all applications in your umbrella share the
-# same configuration and dependencies, which is why they
-# all use the same configuration file. If you want different
-# configurations or dependencies per app, it is best to
-# move said applications out of the umbrella.
 import Config
 
-# Configure Mix tasks and generators
-config :my_gcp_playground,
-  ecto_repos: [MyGcpPlayground.Repo]
+config :my_gcp_playground_domain,
+  ecto_repos: [MyGcpPlaygroundDomain.Repo]
 
 config :my_gcp_playground_web,
-  ecto_repos: [MyGcpPlayground.Repo],
+  ecto_repos: [MyGcpPlaygroundDomain.Repo],
   generators: [context_app: :my_gcp_playground]
 
-# Configures the endpoint
 config :my_gcp_playground_web, MyGcpPlaygroundWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: MyGcpPlaygroundWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: MyGcpPlayground.PubSub,
   live_view: [signing_salt: "CzW1OFLP"]
 
-# Configure esbuild (the version is required)
 config :esbuild,
   version: "0.14.29",
   default: [
@@ -34,14 +22,10 @@ config :esbuild,
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
 
-# Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
