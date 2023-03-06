@@ -26,7 +26,8 @@ defmodule MyGcpPlaygroundDomain.MixProject do
   defp deps() do
     [
       {:ecto_sql, "~> 3.6"},
-      {:postgrex, ">= 0.0.0"}
+      {:postgrex, ">= 0.0.0"},
+      {:my_gcp_playground, in_umbrella: true}
     ]
   end
 

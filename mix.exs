@@ -7,7 +7,8 @@ defmodule MyGcpPlayground.Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      releases: releases()
     ]
   end
 
@@ -15,10 +16,23 @@ defmodule MyGcpPlayground.Umbrella.MixProject do
     []
   end
 
-  defp aliases do
+  defp aliases() do
     [
-      # run `mix setup` in all child apps
+      ecto_test_setup: ["cmd --app blog_domain MIX_ENV=test mix ecto.test_setup"],
       setup: ["cmd mix setup"]
+    ]
+  end
+
+  defp releases() do
+    [
+      my_gcp_playground_umbrella: [
+        include_executables_for: [:unix],
+        applications: [
+          my_gcp_playground: :permanent,
+          my_gcp_playground_domain: :permanent,
+          my_gcp_playground_web: :permanent,
+        ]
+      ]
     ]
   end
 end
